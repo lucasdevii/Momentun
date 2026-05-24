@@ -1,0 +1,149 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum role_states {
+  owner
+  admin
+  member
+}
+
+enum type_cards {
+  submiter
+  text
+}
+
+enum user_status {
+  pending
+  accepted
+  denied
+}
+
+enum type_contents {
+  text
+  checklist
+  image
+  code
+  link
+  file
+  quote
+  heading
+  divider
+}
+
+//          <----------------------  MODELS  ------------------------>
+model users {
+  id             Int          @id @default(autoincrement())
+
+  invite_code    String       @unique
+  email          String       @unique
+  name           String
+  password       String
+  description    String? 
+
+  created_at     DateTime     @default(now())
+  updated_at     DateTime     @updatedAt
+
+  sentFriends     users_friends[]     @relation("FriendInviter")
+  receivedFriends users_friends[]     @relation("FriendReceiver")
+  owner_projects  projects[]
+  projects        users_projects[]
+  user_tasks      users_cards_tasks[]
+}
+
+model users_friends {
+  inviter_id     Int
+  receiver_id    Int          
+  status         user_status   @default(pending)
+
+  created_at     DateTime      @default(now())
+  updated_at     DateTime      @updatedAt
+
+  inviter       users          @relation("FriendInviter", fields: [inviter_id], references: [id])
+
+  receiver      users          @relation("FriendReceiver", fields: [receiver_id], references: [id])
+
+  @@id([inviter_id, receiver_id])
+}
+
+model projects {
+  id             Int           @id @default(autoincrement())
+
+  owner_id       Int         
+  name           String
+  description    String? 
+
+  created_at     DateTime      @default(now())
+  updated_at     DateTime      @updatedAt
+
+  owner          users         @relation(fields: [owner_id], references: [id])
+  members        users_projects[]
+  cards          cards[]
+}
+
+model users_projects {
+  id             Int           @id @default(autoincrement())
+
+  project_id     Int          
+  user_id        Int
+  role           role_states   @default(member)
+  exp            Int
+  
+  updated_at     DateTime      @updatedAt
+  created_at     DateTime      @default(now())
+
+  project        projects      @relation(fields: [project_id], references: [id])
+  user           users         @relation(fields: [user_id], references: [id])
+}
+
+model cards {
+  id             Int           @id @default(autoincrement())
+
+  project_id     Int          
+  type           type_cards    @default(text)
+
+  updated_at     DateTime      @updatedAt
+  created_at     DateTime      @default(now())
+
+  project        projects      @relation(fields: [project_id], references: [id])
+
+  contents       cards_contents[]
+  users_tasks    users_cards_tasks[]
+}
+
+model cards_contents {
+  id             Int           @id @default(autoincrement())
+
+  card_id        Int           
+  position       Int
+  text           String      
+  type           type_contents @default(text)
+
+  updated_at     DateTime      @updatedAt
+  created_at     DateTime      @default(now())
+
+  card           cards         @relation(fields: [card_id], references: [id])  
+  
+  @@unique([card_id, position])
+}
+
+model users_cards_tasks {
+  user_id        Int           
+  card_id        Int
+
+  user           users         @relation(fields: [user_id], references: [id])
+  card           cards         @relation(fields: [card_id], references: [id])
+
+  @@id([user_id, card_id])
+}
+

@@ -1,8 +1,14 @@
+import cookieParser from "cookie-parser"
 import express from "express"
-const app = express()
-const PORT = 4000
+import dotenv from "dotenv"
 
+dotenv.config()
+
+const app = express()
+const PORT = process.env.PORT
+
+app.use(cookieParser())
 
 app.listen(PORT, () => {
-    console.log("Servidor rodando na porta: ",PORT)
+    console.log("Servidor rodando na porta: " + PORT)
 })

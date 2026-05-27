@@ -30,7 +30,7 @@ export const login = async (req, res) => {
     //Adicionar JWT SESSION
     const token = jwt.sign({id: user.id}, process.env.SECRET_KEY);
 
-    res.cookie("auth", token, {
+    res.cookie("token", token, {
         httpOnly: true,
         secure: false,
         sameSite: "strict",
@@ -85,7 +85,7 @@ export const register = async (req, res) => {
     const user = await createUser(username, email, password) //Arrumar isso aqui
     const {password, ...safeUser} = user 
 
-    res.cookie("auth", token, {
+    res.cookie("token", token, {
         httpOnly: true,
         secure: false,
         sameSite: "strict",

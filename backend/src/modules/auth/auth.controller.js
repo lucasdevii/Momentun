@@ -25,7 +25,7 @@ export const login = async (req, res) => {
         return res.status(400).json({message: "Senha incorreta."})
     }
 
-    const { passwordUser, ...safeUser } = user 
+    const { password, ...safeUser } = user 
 
     //Adicionar JWT SESSION
     const token = jwt.sign({id: user.id}, process.env.SECRET_KEY);
@@ -83,7 +83,7 @@ export const register = async (req, res) => {
 
     //Lógica de criação:
     const user = await createUser(username, email, password) //Arrumar isso aqui
-    const {passwordDb, ...secureUser} = user 
+    const {password, ...safeUser} = user 
 
     res.cookie("auth", token, {
         httpOnly: true,
@@ -91,5 +91,5 @@ export const register = async (req, res) => {
         sameSite: "strict",
     })
     //Se não tiver erros retorna bem sucedido
-    return res.status(201).json({ message: 'Usuário criado com sucesso!', user: user })
+    return res.status(201).json({ message: 'Usuário criado com sucesso!', user: safeUser })
 }

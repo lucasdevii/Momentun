@@ -93,3 +93,7 @@ export const register = async (req, res) => {
     //Se não tiver erros retorna bem sucedido
     return res.status(201).json({ message: 'Usuário criado com sucesso!', user: safeUser })
 }
+export const logout = (req, res) => {
+    res.clearCookie("token")
+    res.status(200).json({message: "Logout realizado."})
+}

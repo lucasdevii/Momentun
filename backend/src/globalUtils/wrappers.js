@@ -1,4 +1,4 @@
-export const asyncHandler = async (fn) => {
+export const asyncWrapper = async (fn) => {
     return async (...args) => {
         try{
             await fn(...args)

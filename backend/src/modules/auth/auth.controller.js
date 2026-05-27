@@ -1,10 +1,11 @@
 import { findFirstUser, findUserByEmail, isValidEmail } from '../user/user.service.js'
 import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
+import { asyncWrapper } from '../../globalUtils/wrappers.js'
 
 
 
-export const login = async (req, res) => {
+export const login = asyncWrapper(async (req, res) => {
     const {email, password} = req.body;   
 
     if(!email || !password){
@@ -36,11 +37,11 @@ export const login = async (req, res) => {
         sameSite: "strict",
     })
     return res.status(200).json({message: `Bem vindo! ${user.username}.`, user: safeUser})
-}
+})
 
 
 
-export const register = async (req, res) => {
+export const register = asyncWrapper(async (req, res) => {
     const {password, passwordConfirm, email, username} = req.body
     let errors = []
 
@@ -92,8 +93,8 @@ export const register = async (req, res) => {
     })
     //Se não tiver erros retorna bem sucedido
     return res.status(201).json({ message: 'Usuário criado com sucesso!', user: safeUser })
-}
-export const logout = (req, res) => {
+})
+export const logout = asyncWrapper(async (req, res) => {
     res.clearCookie("token")
     res.status(200).json({message: "Logout realizado."})
-}
+})

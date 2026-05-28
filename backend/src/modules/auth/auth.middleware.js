@@ -1,8 +1,7 @@
 import jwt from 'jsonwebtoken'
 import { findUserById } from '../user/user.service'
-import { asyncWrapper } from '../../globalUtils/wrappers'
 
-export const requireAuth = asyncWrapper(async (req, res, next) => {
+export const requireAuth = async (req, res, next) => {
     const token = req.cookies.token
     
     const payload = jwt.verify(token, process.env.SECRET_KEY)
@@ -15,11 +14,11 @@ export const requireAuth = asyncWrapper(async (req, res, next) => {
 
     next()
 })
-export const requireGuest = asyncWrapper((req, res, next) => {
+export const requireGuest = (req, res, next) => {
     const token = req.cookies.token
 
     if(!token){
-        next()
+        return next()
     }
 
     //Adicionar lógica de expiresDate no jwt

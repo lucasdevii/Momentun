@@ -1,15 +1,8 @@
-import { findFirstUser, findUserByEmail, isValidEmail } from '../user/user.service.js'
+import { findFirstUser, findUserByEmail, isValidEmail, createUser } from '../user/user.service.js'
 import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
-import { asyncWrapper } from '../../globalUtils/wrappers.js'
 
-<<<<<<< HEAD
 export const login = async (req, res) => {
-=======
-
-
-export const login = asyncWrapper(async (req, res) => {
->>>>>>> ed1dc17de827e237d53e631e6e6472365d02f392
     const {email, password} = req.body;   
 
     if(!email || !password){
@@ -33,7 +26,7 @@ export const login = asyncWrapper(async (req, res) => {
     const { password: _, ...safeUser } = user 
 
     //Adicionar JWT SESSION
-    const token = jwt.sign({id: user.id}, process.env.SECRET_KEY);
+    const token = jwt.sign({id: user.id}, process.env.JWT_SECRET);
 
     res.cookie("token", token, {
         httpOnly: true,
@@ -41,16 +34,11 @@ export const login = asyncWrapper(async (req, res) => {
         sameSite: "strict",
     })
     return res.status(200).json({message: `Bem vindo! ${user.username}.`, user: safeUser})
-})
+}
 
 
 
-<<<<<<< HEAD
 export const register = async (req, res) => {
-    console.log("registe")
-=======
-export const register = asyncWrapper(async (req, res) => {
->>>>>>> ed1dc17de827e237d53e631e6e6472365d02f392
     const {password, passwordConfirm, email, username} = req.body
     let errors = []
 
@@ -80,19 +68,24 @@ export const register = asyncWrapper(async (req, res) => {
             errors.push('O nome deve conter 5 ou mais caracteres.')
         }
     }
-    const existsUser = await findFirstUser({id: null, email: email, username: username})
+    const existsUser = await findFirstUser(username, email)
     if (existsUser) {
-        if(existsUser.name == username) errors.push('Esse nome já esta sendo utilizado.')
+        if(existsUser.username == username) errors.push('Esse nome já esta sendo utilizado.')
         else if(existsUser.email == email) errors.push('Esse email já esta sendo utilizado.')
     }
     //Se tiver erros retorna-os
     if (errors.length) { 
         return res.status(400).json({ errors: errors }) 
     }
+    const user = await createUser({name: username, email: email, password: password}) 
 
-
+    console.log(user)
     //Lógica de criação:
-    const user = await createUser(username, email, password) //Arrumar isso aqui
+    const token = jwt.sign(
+        { id: user.id },
+        process.env.JWT_SECRET,
+    )
+
     const {password: _, ...safeUser} = user 
 
     res.cookie("token", token, {
@@ -102,8 +95,8 @@ export const register = asyncWrapper(async (req, res) => {
     })
     //Se não tiver erros retorna bem sucedido
     return res.status(201).json({ message: 'Usuário criado com sucesso!', user: safeUser })
-})
-export const logout = asyncWrapper(async (req, res) => {
+}
+export const logout = async (req, res) => {
     res.clearCookie("token")
     res.status(200).json({message: "Logout realizado."})
-})
+}

@@ -14,20 +14,19 @@ export const isValidEmail = (email) => {
  * }} params
  * @returns usersObject || null
  */
-export const findFirstUser = async ({id, email, username}) => {
-  const fillters = [
-          id ? { id: id } : undefined,
+export const findFirstUser = async (username, email) => {
+  const filters = [
           email ? { email: email } : undefined,
           username ? { username: username } : undefined
         ].filter(Boolean)
 
-  if (!fillters.length){
+  if (!filters.length){
     return null
   }
 
   return await prisma.users.findFirst({
     where: {
-      OR: fillters
+      OR: filters
     }
   })
 }
@@ -57,7 +56,6 @@ export const createUser = async ({name, email, password, description}) => {
   
   return await prisma.users.create({
     data: {
-      invite_code: inviteCode,
       username: name,
       email: email,
       password: password,

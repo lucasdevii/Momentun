@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken'
 import { findUserById } from '../user/user.service'
+import { asyncWrapper } from '../../globalUtils/wrappers'
 
-export const requireAuth = async (req, res, next) => {
+export const requireAuth = asyncWrapper(async (req, res, next) => {
     const token = req.cookies.token
     
     const payload = jwt.verify(token, process.env.SECRET_KEY)
@@ -13,8 +14,8 @@ export const requireAuth = async (req, res, next) => {
     req.user = safeUser;
 
     next()
-}
-export const requireGuest = (req, res, next) => {
+})
+export const requireGuest = asyncWrapper((req, res, next) => {
     const token = req.cookies.token
 
     if(!token){
@@ -25,4 +26,4 @@ export const requireGuest = (req, res, next) => {
 
     res.status(401).json({message: "Você já esta logado em uma conta."})
     
-}
+})

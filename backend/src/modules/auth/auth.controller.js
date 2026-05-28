@@ -20,7 +20,8 @@ export const login = async (req, res) => {
     const isEquals = await bcrypt.compare(password, user.password);
 
     if(!isEquals){
-        return res.status(400).json({message: "Senha incorreta."})
+        console.log(password, user.password, isEquals)
+        return res.status(400).json({message: "Email ou senha incorretos."})
     }
 
     const { password: _, ...safeUser } = user 
@@ -77,7 +78,10 @@ export const register = async (req, res) => {
     if (errors.length) { 
         return res.status(400).json({ errors: errors }) 
     }
-    const user = await createUser({name: username, email: email, password: password}) 
+
+    const passwordHash = await bcrypt.hash(password, Number(process.env.BCRYPT_SALT))
+
+    const user = await createUser({name: username, email: email, password: passwordHash}) 
 
     console.log(user)
     //Lógica de criação:

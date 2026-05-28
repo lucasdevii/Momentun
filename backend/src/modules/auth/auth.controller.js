@@ -2,8 +2,6 @@ import { findFirstUser, findUserByEmail, isValidEmail } from '../user/user.servi
 import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
 
-
-
 export const login = async (req, res) => {
     const {email, password} = req.body;   
 
@@ -25,7 +23,7 @@ export const login = async (req, res) => {
         return res.status(400).json({message: "Senha incorreta."})
     }
 
-    const { password, ...safeUser } = user 
+    const { password: _, ...safeUser } = user 
 
     //Adicionar JWT SESSION
     const token = jwt.sign({id: user.id}, process.env.SECRET_KEY);
@@ -41,6 +39,7 @@ export const login = async (req, res) => {
 
 
 export const register = async (req, res) => {
+    console.log("registe")
     const {password, passwordConfirm, email, username} = req.body
     let errors = []
 
@@ -83,7 +82,7 @@ export const register = async (req, res) => {
 
     //Lógica de criação:
     const user = await createUser(username, email, password) //Arrumar isso aqui
-    const {password, ...safeUser} = user 
+    const {password: _, ...safeUser} = user 
 
     res.cookie("token", token, {
         httpOnly: true,

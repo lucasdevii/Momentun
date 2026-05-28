@@ -1,4 +1,4 @@
-import prisma from "../../../database/prisma/prisma";
+import prisma from "../../../database/prisma/prisma.ts";
 
 export const isValidEmail = (email) => {
   // A standard regex for basic email structure

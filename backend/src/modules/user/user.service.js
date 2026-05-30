@@ -34,15 +34,23 @@ export const findFirstUser = async (username, email) => {
 export const findUserByEmail = async (email) => {
   return await prisma.users.findUnique({
     where: {
-      email:email
+      email: email
     }
   })
 } 
 
+export const findUserByUsername = async (username) => {
+  return await prisma.users.findUnique({
+    where: {
+      username: username
+    }
+  })
+}
+
 export const findUserById = async (id) => {
   return await prisma.users.findUnique({
     where: {
-      id:id
+      id: id
     }
   })
 } 
@@ -52,11 +60,11 @@ export const findUserById = async (id) => {
  * @param {User Object {name, email, password, description?}}  
  * @returns UserObject
  */
-export const createUser = async ({name, email, password, description}) => {
+export const createUser = async ({username, email, password, description}) => {
   
   return await prisma.users.create({
     data: {
-      username: name,
+      username: username,
       email: email,
       password: password,
       description: description || ''

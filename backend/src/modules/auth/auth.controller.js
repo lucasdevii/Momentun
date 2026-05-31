@@ -36,6 +36,7 @@ export const login = async (req, res) => {
 }
 
 export const register = async (req, res) => {
+    console.log("asdasd")
     const {password, passwordConfirm, email, username} = req.body
     let errors = []
 

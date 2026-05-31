@@ -12,7 +12,7 @@ const PORT = process.env.PORT
 app.use(express.json())
 app.use(cookieParser())
 // Rotas
-app.use("/auth", authRouter)
+app.use("api/auth", authRouter)
 
 app.listen(PORT, () => {
     console.log("Servidor rodando na porta: " + PORT)

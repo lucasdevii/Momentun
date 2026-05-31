@@ -1,6 +1,7 @@
 import { findFirstUser, findUserByEmail, isValidEmail, createUser, findUserByUsername } from '../user/user.service.js'
 import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
+import { registerValidateForm } from '../../validators/auth.validate.js';
 
 export const login = async (req, res) => {
     const {email, password} = req.body;   
@@ -38,39 +39,16 @@ export const login = async (req, res) => {
 export const register = async (req, res) => {
     console.log("asdasd")
     const {password, passwordConfirm, email, username} = req.body
-    let errors = []
 
-    // ------------- TRATAMENTO DE ERROS -----------------
-    if ( //Verifica se cada campo veio em formato de string
-        typeof password !== 'string' ||
-        typeof passwordConfirm !== 'string' ||
-        typeof email !== 'string' ||
-        typeof username !== 'string'
-    ) {
-        errors.push({message: 'Informações inválidas.', type: 'all'})
-        return res.status(400).json({errors: errors})
-    }
-    if (!isValidEmail(email)) {
-        errors.push({message: 'Email inválido.', type: 'email'})
-    }
-    if (password !== password.trim()){
-        errors.push({message: 'A senha não pode ter espaços.', type: 'password'})
-    }
-    if (password !== passwordConfirm) {
-        errors.push({message: 'As senhas não coincidem.', type: 'passwordConfirm'})
-    }
-    if (password.trim().length < 7) {
-        errors.push({message: 'A senha deve conter 7 ou mais caracteres.', type: 'password'})
-    }
-    if (username.trim().length < 5) {
-        errors.push({message: 'O nome deve conter 5 ou mais caracteres.', type: 'username'})
-    }
+    const dataForm = {password, passwordConfirm, email, username}
+
+    const errors = registerValidateForm(dataForm);
+
     //Se tiver erros retorna-os
     if (errors.length) { 
         return res.status(401).json({ errors: errors }) 
     }
 
-    
     const usernameExists = await findUserByUsername(username)
     if (usernameExists) errors.push({message: 'username já utilizado.', type: 'username'})
 

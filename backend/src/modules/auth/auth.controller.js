@@ -47,33 +47,35 @@ export const register = async (req, res) => {
         typeof email !== 'string' ||
         typeof username !== 'string'
     ) {
-        errors.push('Informações inválidas.')
+        errors.push({message: 'Informações inválidas.', type: 'all'})
         return res.status(400).json({errors: errors})
     }
     if (!isValidEmail(email)) {
-        errors.push('Email inválido.')
+        errors.push({message: 'Email inválido.', type: 'email'})
     }
     if (password !== password.trim()){
-        errors.push('A senha não pode ter espaços.')
+        errors.push({message: 'A senha não pode ter espaços.', type: 'password'})
     }
     if (password !== passwordConfirm) {
-        errors.push('As senhas não coincidem.')
+        errors.push({message: 'As senhas não coincidem.', type: 'passwordConfirm'})
     }
     if (password.trim().length < 7) {
-        errors.push('A senha deve conter 7 ou mais caracteres.')
+        errors.push({message: 'A senha deve conter 7 ou mais caracteres.', type: 'password'})
     }
     if (username.trim().length < 5) {
-        errors.push('O nome deve conter 5 ou mais caracteres.')
+        errors.push({message: 'O nome deve conter 5 ou mais caracteres.', type: 'username'})
     }
     //Se tiver erros retorna-os
     if (errors.length) { 
         return res.status(401).json({ errors: errors }) 
     }
+
+    
     const usernameExists = await findUserByUsername(username)
-    if (usernameExists) errors.push('username já utilizado.') 
+    if (usernameExists) errors.push({message: 'username já utilizado.', type: 'username'})
 
     const emailExists = await findUserByEmail(email)
-    if (emailExists) errors.push('Email já utilizado.')
+    if (emailExists) errors.push({message: 'Email já utilizado.', type: 'email'})
 
     if(errors.length) return res.status(401).json({ errors: errors })
 

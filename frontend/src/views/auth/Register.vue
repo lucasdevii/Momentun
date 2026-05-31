@@ -11,11 +11,11 @@
                             <label for="name">Username</label>
                             <input v-model="username" type="text" maxlength="20" id="name">
                             <label for="email">Email</label>
-                            <input v-model="email" type="email" maxlength="60" id="email">
+                            <input v-model="email" type="text" maxlength="60" id="email">
                             <label for="password">Password</label>
-                            <input v-model="password" type="password" maxlength="50" id="password">
+                            <input v-model="password" type="text" maxlength="20" id="password">
                             <label for="passwordConfirm">Password confirmation</label>
-                            <input v-model="passwordConfirm" type="password" maxlength="50" id="passwordConfirm">
+                            <input v-model="passwordConfirm" type="text" maxlength="20" id="passwordConfirm">
                         </div>
                         <div class="w-full flex justify-end">
                             <button @click="submit()">asdsa</button>

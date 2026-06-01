@@ -33,6 +33,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { login } from '../../services/auth.services.js'
+import Cookie from 'js-cookie'
 
 const router = useRouter()
 const email = ref('')
@@ -52,7 +53,9 @@ const submit = async () => {
         return
     }
 
-    // on success redirect to root (app may handle authenticated routes)
+    const token = response.data.token
+    Cookie.set('token', token)
+
     router.push('/')
 }
 </script>

@@ -11,26 +11,26 @@
                             <div>
                                 <label for="name">Username</label>
                                 <input v-model="username" type="text" maxlength="20" id="name">
-                                <span class="text-red-500 h-5">{{ errors.username?.[0] || '' }}</span>
+                                <span class="text-red-500 text-xs">{{ errors.username?.[0] || '' }}</span>
                             </div>
                             <div>
                                 <label for="email">Email</label>
                                 <input v-model="email" type="email" maxlength="60" id="email">
-                                <span class="text-red-500 h-5">{{ errors.email?.[0] || '' }}</span>
+                                <span class="text-red-500 text-xs">{{ errors.email?.[0] || '' }}</span>
                             </div>
                             <div>
                                 <label for="password">Password</label>
                                 <input v-model="password" type="password" maxlength="20" id="password">
-                                <span class="text-red-500 h-5">{{ errors.password?.[0] ||'' }}</span>
+                                <span class="text-red-500 text-xs">{{ errors.password?.[0] ||'' }}</span>
                             </div>
                             <div>
                                 <label for="passwordConfirm">Password confirmation</label>
                                 <input v-model="passwordConfirm" type="password" maxlength="20" id="passwordConfirm">
-                                <span class="text-red-500 h-5">{{ errors.passwordConfirm?.[0] }}</span>
+                                <span class="text-red-500 text-xs">{{ errors.passwordConfirm?.[0] }}</span>
                             </div>
                         </div>
                         <div class="w-full flex justify-end">
-                            <button class="button-primary" type="submit">Enviar</button>
+                            <button type="submit">Enviar</button>
                         </div>
                     </form>
                     
@@ -48,6 +48,10 @@ import { ref } from "vue"
 import { registerValidate } from "../../validators/auth.validate.js"
 import { register } from "../../services/auth.services.js"
 import { useRouter } from 'vue-router'
+import Cookie from 'js-cookie'
+
+const router = useRouter()
+
 const username = ref('')
 const email = ref('')
 const password = ref('')
@@ -59,7 +63,6 @@ const errors = ref({
     passwordConfirm: [],
     all: []
 })
-const router = useRouter()
 
 const submit = async () => {
     const userData = {
@@ -78,11 +81,9 @@ const submit = async () => {
     const response = await register(userData);
 
     if(!response.success){     
-        // TODO: map backend errors into `errors` to show them
         return
     }
 
-    // on success, go to login
     router.push('/login')
 }
 

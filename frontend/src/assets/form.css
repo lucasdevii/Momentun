@@ -12,8 +12,10 @@ button{
     background-color: var(--bg-secondary);
     border-radius: 0.5rem;
     cursor: pointer;
+    transition-duration: 200ms;
 }
 button:hover{
-    background-color: var(--bg-secondary);
+    background-color: var(--bg-secondary-shading);
     border-color: var(--bg-current);
+    scale: 105%;
 }

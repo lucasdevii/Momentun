@@ -2,6 +2,7 @@
 :root{
     --bg-main: rgb(201, 187, 172);
     --bg-secondary: rgb(82, 57, 243);
+    --bg-secondary-shading: rgb(64, 45, 187);
     --bg-current: white;
     --minucious-primary-color: rgb(196, 196, 196);
     --minucious-secondary-color: rgb(233, 233, 233);

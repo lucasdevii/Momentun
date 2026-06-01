@@ -24,23 +24,23 @@ export const registerValidate = (data) => {
     }
 
     if (!isValidEmail(email)) {
-        errors.emailErrors.push('Email inválido.');
+        errors.email.push('Email inválido.');
     }
 
     if (password !== password.trim()) {
-        errors.passwordErrors.push('A senha não pode ter espaços.');
+        errors.password.push('A senha não pode ter espaços.');
     }
 
     if (password !== passwordConfirm) {
-        errors.passwordConfirmErrors.push('As senhas não coincidem.');
+        errors.passwordConfirm.push('As senhas não coincidem.');
     }
 
     if (password.trim().length < 7) {
-        errors.passwordErrors.push('A senha deve conter 7 ou mais caracteres.');
+        errors.password.push('A senha deve conter 7 ou mais caracteres.');
     }
 
     if (username.trim().length < 5) {
-        errors.usernameErrors.push('O nome deve conter 5 ou mais caracteres.');
+        errors.username.push('O nome deve conter 5 ou mais caracteres.');
     }
 
     return errors;

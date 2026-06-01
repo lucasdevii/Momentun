@@ -6,33 +6,34 @@
                     <div class="w-full text-center py-2">
                         <h1 class="text-xl font-bold">Register</h1>
                     </div>
-                    <div class="w-full space-y-2 p-3">
-                        <div>
+                    <form class="w-full space-y-2 p-3" @submit.prevent="submit">
+                        <div class="space-y-2">
                             <div>
                                 <label for="name">Username</label>
                                 <input v-model="username" type="text" maxlength="20" id="name">
-                                <span>{{ errors.username[0] }}</span>
+                                <span class="text-red-500 h-5">{{ errors.username?.[0] || '' }}</span>
                             </div>
                             <div>
                                 <label for="email">Email</label>
                                 <input v-model="email" type="email" maxlength="60" id="email">
-                                <span>{{ errors.email[0] }}</span>
+                                <span class="text-red-500 h-5">{{ errors.email?.[0] || '' }}</span>
                             </div>
                             <div>
                                 <label for="password">Password</label>
                                 <input v-model="password" type="password" maxlength="20" id="password">
-                                <span>{{ errors.password[0] }}</span>
+                                <span class="text-red-500 h-5">{{ errors.password?.[0] ||'' }}</span>
                             </div>
                             <div>
                                 <label for="passwordConfirm">Password confirmation</label>
                                 <input v-model="passwordConfirm" type="password" maxlength="20" id="passwordConfirm">
-                                <span>{{ errors.passwordConfirm[0] }}</span>
+                                <span class="text-red-500 h-5">{{ errors.passwordConfirm?.[0] }}</span>
                             </div>
                         </div>
                         <div class="w-full flex justify-end">
-                            <button class="button-primary" @click="submit">asdsa</button>
+                            <button class="button-primary" type="submit">Enviar</button>
                         </div>
-                    </div>
+                    </form>
+                    
                 </div>
                 <div class="w-10/12 mx-auto bg-(--bg-current) rounded-lg mt-4">
                     OPÇÕES
@@ -45,6 +46,8 @@
 <script setup>
 import { ref } from "vue"
 import { registerValidate } from "../../validators/auth.validate.js"
+import { register } from "../../services/auth.services.js"
+import { useRouter } from 'vue-router'
 const username = ref('')
 const email = ref('')
 const password = ref('')
@@ -56,6 +59,7 @@ const errors = ref({
     passwordConfirm: [],
     all: []
 })
+const router = useRouter()
 
 const submit = async () => {
     const userData = {
@@ -74,10 +78,12 @@ const submit = async () => {
     const response = await register(userData);
 
     if(!response.success){     
+        // TODO: map backend errors into `errors` to show them
         return
     }
-    console.log(response)
-    //VRAAAAU sucesso, manda pra home ou algo do tipo
+
+    // on success, go to login
+    router.push('/login')
 }
 
 </script>

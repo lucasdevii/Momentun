@@ -1,11 +1,14 @@
-import { isValidEmail } from "../modules/user/user.service.js";
+export const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
 
 /**
  * 
- * @param {String password, String passwordConfirm, String email, String username} data 
- * @returns Retorna um Array de erros no formato: [{message: '', type: ''}, ...], se não tiver erros, retorna Array vazio []
+ * @param {String password, String passwordConfirm, String email, String username } data 
+ * @returns 
  */
-export const registerValidateForm = (data) => {
+export const registerValidate = (data) => {
     const { password, passwordConfirm, email, username } = data;
     let errors = {
         email: [],
@@ -21,23 +24,23 @@ export const registerValidateForm = (data) => {
     }
 
     if (!isValidEmail(email)) {
-        errors.email.push('Email inválido.');
+        errors.emailErrors.push('Email inválido.');
     }
 
     if (password !== password.trim()) {
-        errors.password.push('A senha não pode ter espaços.');
+        errors.passwordErrors.push('A senha não pode ter espaços.');
     }
 
     if (password !== passwordConfirm) {
-        errors.passwordConfirm.push('As senhas não coincidem.');
+        errors.passwordConfirmErrors.push('As senhas não coincidem.');
     }
 
     if (password.trim().length < 7) {
-        errors.password.push('A senha deve conter 7 ou mais caracteres.');
+        errors.passwordErrors.push('A senha deve conter 7 ou mais caracteres.');
     }
 
     if (username.trim().length < 5) {
-        errors.username.push('O nome deve conter 5 ou mais caracteres.');
+        errors.usernameErrors.push('O nome deve conter 5 ou mais caracteres.');
     }
 
     return errors;

@@ -45,17 +45,18 @@ export const register = async (req, res) => {
     const errors = registerValidateForm(dataForm);
 
     //Se tiver erros retorna-os
-    if (errors.length) { 
+    if (errors.username.length || errors.email.length || errors.password.length || errors.passwordConfirm.length || errors.all.length) { 
         return res.status(401).json({ errors: errors }) 
     }
 
     const usernameExists = await findUserByUsername(username)
-    if (usernameExists) errors.push({message: 'username já utilizado.', type: 'username'})
+    if (usernameExists) errors.username.push('username já utilizado.')
 
     const emailExists = await findUserByEmail(email)
-    if (emailExists) errors.push({message: 'Email já utilizado.', type: 'email'})
+    if (emailExists) errors.email.push('Email já utilizado.')
 
-    if(errors.length) return res.status(401).json({ errors: errors })
+    //Se tiver erro de conflito com users já existentes retorna-os
+    if(errors.username.length || errors.email.length || errors.password.length || errors.passwordConfirm.length || errors.all.length) return res.status(401).json({ errors: errors })
 
     const passwordHash = await bcrypt.hash(password, Number(process.env.BCRYPT_SALT))
 

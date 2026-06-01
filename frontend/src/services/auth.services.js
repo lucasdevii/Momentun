@@ -1,7 +1,7 @@
 import api from "./api"
-import { asyncWrapper } from "../utils/wrappers";
+import { asyncReqWrapper } from "../utils/wrappers";
 
-export const register = asyncWrapper(async (userData) => {
+export const register = asyncReqWrapper(async (userData) => {
     const res = await api.post('/auth/register', userData);
     return res
 })

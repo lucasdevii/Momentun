@@ -1,0 +1,21 @@
+@import "tailwindcss";
+:root{
+    --bg-main: rgb(201, 187, 172);
+    --bg-secondary: #432dd7;
+    --bg-current: white;
+    --minucious-primary-color: rgb(196, 196, 196);
+    --minucious-secondary-color: rgb(233, 233, 233);
+    --text: black;
+}
+.dark{
+    --bg-main: rgb(201, 187, 172);
+    --bg-secondary: #432dd7;
+    --bg-current: black;
+    --text: rgb(226, 226, 226);
+}
+*{
+    color: var(--text);
+}
+.main-container{
+    background-color: var(--bg-main);
+}

@@ -8,17 +8,29 @@
                     </div>
                     <div class="w-full space-y-2 p-3">
                         <div>
-                            <label for="name">Username</label>
-                            <input v-model="username" type="text" maxlength="20" id="name">
-                            <label for="email">Email</label>
-                            <input v-model="email" type="text" maxlength="60" id="email">
-                            <label for="password">Password</label>
-                            <input v-model="password" type="text" maxlength="20" id="password">
-                            <label for="passwordConfirm">Password confirmation</label>
-                            <input v-model="passwordConfirm" type="text" maxlength="20" id="passwordConfirm">
+                            <div>
+                                <label for="name">Username</label>
+                                <input v-model="username" type="text" maxlength="20" id="name">
+                                <span>{{ errors.username[0] }}</span>
+                            </div>
+                            <div>
+                                <label for="email">Email</label>
+                                <input v-model="email" type="email" maxlength="60" id="email">
+                                <span>{{ errors.email[0] }}</span>
+                            </div>
+                            <div>
+                                <label for="password">Password</label>
+                                <input v-model="password" type="password" maxlength="20" id="password">
+                                <span>{{ errors.password[0] }}</span>
+                            </div>
+                            <div>
+                                <label for="passwordConfirm">Password confirmation</label>
+                                <input v-model="passwordConfirm" type="password" maxlength="20" id="passwordConfirm">
+                                <span>{{ errors.passwordConfirm[0] }}</span>
+                            </div>
                         </div>
                         <div class="w-full flex justify-end">
-                            <button @click="submit()">asdsa</button>
+                            <button class="button-primary" @click="submit">asdsa</button>
                         </div>
                     </div>
                 </div>
@@ -32,12 +44,18 @@
 </template>
 <script setup>
 import { ref } from "vue"
-import { register } from "../../services/auth.services"
-
+import { registerValidate } from "../../validators/auth.validate.js"
 const username = ref('')
 const email = ref('')
 const password = ref('')
 const passwordConfirm = ref('')
+const errors = ref({
+    email: [],
+    username: [],
+    password: [],
+    passwordConfirm: [],
+    all: []
+})
 
 const submit = async () => {
     const userData = {
@@ -46,11 +64,20 @@ const submit = async () => {
         password: password.value,
         passwordConfirm: passwordConfirm.value
     }
-    const response = await register(userData);
-    console.log(response)
-    if(!response.success){
-        console.log("erro: ", response.error);
+    
+    errors.value = registerValidate(userData)
+
+    if(errors.value.all.length || errors.value.username.length || errors.value.email.length || errors.value.password.length || errors.value.passwordConfirm.length){
+        return 
     }
+    
+    const response = await register(userData);
+
+    if(!response.success){     
+        return
+    }
+    console.log(response)
+    //VRAAAAU sucesso, manda pra home ou algo do tipo
 }
 
 </script>

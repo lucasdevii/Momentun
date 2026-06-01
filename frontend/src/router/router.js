@@ -8,16 +8,19 @@ const routes = [
     {
         path: "/login",
         name: "login",
-        component: Login
+        component: Login,
+        meta: {showSideBar: false}
     },
     {
         path: "/register",
         name: "register",
-        component: Register
+        component: Register,
+        meta: {showSideBar: false}
     },{
         path: "/",
         name: "home",
-        component: Home
+        component: Home,
+        meta: {showSideBar: true}
     }
 ]
 

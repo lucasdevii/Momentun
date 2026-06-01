@@ -1,5 +1,7 @@
-let isExpanded = false;
+import { ref } from "vue";
 
-export const changeSideBarValue = () => {
-    isExpanded = !isExpanded
+export const isExpanded = ref(false);
+
+export const switchSideBarValue = () => {
+    isExpanded.value = !isExpanded.value
 }

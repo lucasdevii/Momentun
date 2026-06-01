@@ -1,12 +1,11 @@
-<script>
-import { useRouter } from 'vue-router';
+<script setup>
+import { useRoute } from 'vue-router';
 import SideBar from './components/sideBar.vue';
 
-const router = useRouter()
+const route = useRoute();
 </script>
+
 <template>
-  <div>
-    <SideBar v-if="router.meta.showSideBar"/>
-    <router-view />
-  </div>
+  <SideBar v-if="route.meta.showSideBar" />
+  <router-view />
 </template>

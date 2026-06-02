@@ -6,6 +6,7 @@
     --bg-current: white;
     --minucious-primary-color: rgb(196, 196, 196);
     --minucious-secondary-color: rgb(233, 233, 233);
+    --destac-color: rgb(116, 112, 139);
     --text: black;
 }
 .dark{
@@ -15,6 +16,7 @@
     --bg-current: black;
     --minucious-primary-color: rgb(23, 26, 36);
     --minucious-secondary-color: rgb(20, 22, 36);
+    --destac-color: rgb(137, 132, 165);
     --text: rgb(226, 226, 226);
 }
 *{

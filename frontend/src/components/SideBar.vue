@@ -1,8 +1,6 @@
-<script>
+<script setup>
 import { isExpanded, switchSideBarValue } from '../utils/contexts/sideBar.context.js'
-import { getUser } from '../utils/contexts/user.context.js';
-
-const user = getUser();
+import { user } from '../utils/contexts/user.context.js';
 
 </script>
 <template>

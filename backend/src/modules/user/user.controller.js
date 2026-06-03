@@ -1,9 +1,14 @@
-import prisma from "../../../database/prisma/prisma"
-import { findUserById } from "./user.service"
+import jwt from "jsonwebtoken"
+import prisma from "../../../database/prisma/prisma.ts"
+import { findUserById } from "./user.service.js"
 
-export const profile = async (req, res) => {
-    const userId = req.user.id
+export const userInfos = async (req, res) => {
+    const userId = jwt.verify(req.cookies.token, process.env.JWT_SECRET).id
     const user = await findUserById(userId)
-    const {password, ...safeUser} = user
-    res.status(200).json({message: "Informações retornadas.", user: safeUser})
+    const safeUser = {
+        username: user.username,
+        display_name: user.display_name,
+        email: user.email
+    }
+    return res.status(200).json(safeUser)
 }

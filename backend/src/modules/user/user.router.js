@@ -1,6 +1,8 @@
 import { Router } from "express";
-import { profile } from "./user.controller";
+import { userInfos } from "./user.controller.js";
 
 const router = Router()
 
-router.post('me', profile)
+router.get('/me', userInfos)
+
+export default router

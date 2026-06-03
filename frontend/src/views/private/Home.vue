@@ -1,2 +1,4 @@
-<template></template>
+<template>
+    sdfdsf
+</template>
 <script setup></script>

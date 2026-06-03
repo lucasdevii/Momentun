@@ -11,7 +11,3 @@ export const login = asyncReqWrapper(async (credentials) => {
     return res
 })
 
-export const logout = asyncReqWrapper(async () => {
-    const res = await api.post('/auth/logout');
-    return res
-})

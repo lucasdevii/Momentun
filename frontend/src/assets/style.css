@@ -1,6 +1,6 @@
 @import "tailwindcss";
 :root{
-    --bg-main: rgb(201, 187, 172);
+    --bg-main: rgb(240, 236, 232);
     --bg-secondary: rgb(82, 57, 243);
     --bg-secondary-shading: rgb(64, 45, 187);
     --bg-current: white;
@@ -10,10 +10,10 @@
     --text: black;
 }
 .dark{
-    --bg-main: rgb(201, 187, 172);
+    --bg-main: rgb(16, 16, 20);
     --bg-secondary: #432dd7;
     --bg-secondary-shading: rgb(64, 45, 187);    
-    --bg-current: black;
+    --bg-current: rgb(10, 10, 12);
     --minucious-primary-color: rgb(23, 26, 36);
     --minucious-secondary-color: rgb(20, 22, 36);
     --destac-color: rgb(137, 132, 165);
@@ -22,6 +22,6 @@
 *{
     color: var(--text);
 }
-.main-container{
-    background-color: var(--bg-main);
+body{
+     background-color: var(--bg-main);
 }

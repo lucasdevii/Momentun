@@ -3,21 +3,59 @@ import { user } from '../../../utils/contexts/user.context';
 
 const projects = [
         {
+            id: 1,
             name: "blubluasdasdasdasdas",
             description: "Balosdjnasldnasldnasdasdsadasdasd",
         },
         {
+            id: 2,
             name: "blabla",
+            description: null
+        },
+                {
+            id: 3,
+            name: "blablaasdasdsadas",
+            description: "asdsacasdwaqd"
+        },
+        {
+            id: 4,
+            name: "zxczxcawsdblasadxca",
             description: null
         },
     ]
 </script>
 <template>
-    <div>
-        <div class="flex space-x-3 px-3 py-8">
-            <div v-for="project in projects" class="border w-80 h-52 rounded-xl p-3">
-                <h1 class="text-2xl">{{ project?.name }}</h1>
-                <p class="text-xs">{{ project?.description }}</p>
+    <div class="w-full">
+        <h1 class=" px-4 py-3 text-2xl font-semibold mb-4">
+            Projetos
+        </h1>
+
+        <div class="flex gap-4 px-4 py-1 overflow-x-auto pb-2">
+            <!-- Novo Projeto -->
+            <div
+                class="shrink-0 w-72 h-52 rounded-xl border border-dashed border-(--destac-color)
+                flex items-center justify-center cursor-pointer
+                hover:bg-(--minucious-secondary-color)
+                transition-all duration-200 hover:scale-[1.02]"
+            >
+                <span class="text-4xl">+</span>
+            </div>
+
+            <!-- Projetos -->
+            <div
+                v-for="project in projects"
+                :key="project.id"
+                class="shrink-0 w-72 h-52 rounded-xl border border-(--destac-color)
+                bg-(--bg-current) p-4
+                hover:shadow-lg transition-all duration-200"
+            >
+                <h2 class="text-xl font-semibold truncate">
+                    {{ project.name }}
+                </h2>
+
+                <p class="text-sm mt-2 opacity-75 line-clamp-4">
+                    {{ project.description }}
+                </p>
             </div>
         </div>
     </div>

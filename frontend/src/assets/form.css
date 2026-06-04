@@ -6,6 +6,7 @@ input{
     width: 100%;
     height: 2.2rem;
 }
+
 button{
     color: white;
     padding: 0.3rem 1rem;
@@ -14,8 +15,29 @@ button{
     cursor: pointer;
     transition-duration: 200ms;
 }
+
 button:hover{
     background-color: var(--bg-secondary-shading);
     border-color: var(--bg-current);
     scale: 105%;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-current);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+  border: 2px solid var(--minucious-primary-color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

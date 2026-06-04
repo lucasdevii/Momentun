@@ -9,7 +9,7 @@ import { switchSideBarValue, currentSection, Sections } from '../../utils/contex
 <template>
     <div class="flex">
         <SideBar/>
-        <Dashboard v-if="currentSection === Sections.DASHBOARD"/>
-        <Settings v-if="currentSection === Sections.SETTINGS"/>
+        <Dashboard v-if="currentSection === Sections.DASHBOARD" class="overflow-hidden"/>
+        <Settings v-if="currentSection === Sections.SETTINGS" class="overflow-hidden"/>
     </div>
 </template>

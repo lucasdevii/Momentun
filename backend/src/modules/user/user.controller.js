@@ -3,10 +3,7 @@ import { findUserById } from "./user.service.js"
 import { asyncHandler } from "../../utils/wrappers.js"
 
 export const userInfos = asyncHandler(async (req, res) => {
-    if(!req.cookies){
-        return res.status(401).json({message: "Usuário não esta logado.",})
-    }
-    const userId = jwt.verify(req.cookies.token, process.env.JWT_SECRET).id
+    const userId = req.user.id
     const user = await findUserById(userId)
     if(!user){
         res.clearCookie("token")

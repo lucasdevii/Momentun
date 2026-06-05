@@ -15,9 +15,10 @@ const projects = [
     ]
 </script>
 <template>
+
     <div class="w-full">
         <h1 class=" px-4 py-3 text-2xl font-semibold mb-4">
-            Privado
+            Projetos privados
         </h1>
 
         <div class="flex gap-4 px-4 py-1 overflow-x-auto pb-2">
@@ -27,6 +28,7 @@ const projects = [
                 flex items-center justify-center cursor-pointer
                 hover:bg-(--minucious-secondary-color)
                 transition-all duration-200 hover:scale-[1.02] "
+                @click=""
             >
                 <span class="text-4xl">+</span>
             </div>
@@ -53,15 +55,6 @@ const projects = [
 
         <h1 class=" px-4 py-3 text-2xl font-semibold mb-4">Projetos em equipe</h1>
         <div class="flex gap-4 px-4 py-1 overflow-x-auto pb-2">
-            <!-- Novo Projeto -->
-            <div
-                class="shrink-0 w-72 h-52 rounded-xl border border-dashed border-(--destac-color)
-                flex items-center justify-center cursor-pointer
-                hover:bg-(--minucious-secondary-color)
-                transition-all duration-200 hover:scale-[1.02] "
-            >
-                <span class="text-4xl">+</span>
-            </div>
 
             <!-- Projetos -->
             <div

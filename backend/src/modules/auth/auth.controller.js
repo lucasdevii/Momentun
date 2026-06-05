@@ -2,8 +2,9 @@ import { findFirstUser, findUserByEmail, isValidEmail, createUser, findUserByUse
 import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
 import { registerValidateForm } from '../../validators/auth.validate.js';
+import { asyncHandler } from '../../utils/wrappers.js';
 
-export const login = async (req, res) => {
+export const login = asyncHandler(async (req, res) => {
     const {email, password} = req.body;   
 
     if(!email || !password){
@@ -34,9 +35,9 @@ export const login = async (req, res) => {
     );
 
     return res.status(200).json({user: safeUser, token: token})
-}
+})
 
-export const register = async (req, res) => {
+export const register = asyncHandler(async (req, res) => {
     console.log("asdasd")
     const {password, passwordConfirm, email, username} = req.body
 
@@ -72,4 +73,4 @@ export const register = async (req, res) => {
 
     //Se não tiver erros retorna bem sucedido
     return res.status(201).json({ user: safeUser, token: token })
-}
+})

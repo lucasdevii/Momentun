@@ -1,18 +1,8 @@
 <script setup>
+import { ref } from 'vue'
 import { user } from '../../../utils/contexts/user.context';
 
-const projects = [
-        {
-            id: 1,
-            name: "blubluasdasdasdasdas",
-            description: "Balosdjnasldnasldnasdzxzxzxzxzxasdasdsadasdasd",
-        },
-        {
-            id: 2,
-            name: "blabla",
-            description: "asdacaxcxaasd"
-        },
-    ]
+const projects = ref([])
 </script>
 <template>
 

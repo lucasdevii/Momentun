@@ -6,7 +6,7 @@ import { user } from '../utils/contexts/user.context.js';
 <template>
     <div 
         :class="isExpanded ? 'w-min' : 'w-48'" 
-        class="border-r border-(--destac-color) h-screen p-3 flex flex-col justify-between relative"     
+        class="border-r border-(--destac-color) h-screen p-3 flex flex-col justify-between relative z-50"     
     >
         <div class="absolute -right-3 cursor-pointer bg-(--destac-color) rounded-full p-1 duration-200 hover:scale-110" @click="switchSideBarValue">
             {{ isExpanded ? '➡️' : '⬅️' }}

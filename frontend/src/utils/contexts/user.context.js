@@ -4,7 +4,8 @@ import { getOwnInfo } from '../../services/user.services';
 export const user = reactive({
     username: null,
     display_name: null,
-    email: null
+    email: null,
+    projects: [],
 });
 
 export const loadUser = async () => {

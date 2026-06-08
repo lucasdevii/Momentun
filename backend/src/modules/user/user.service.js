@@ -53,7 +53,11 @@ export const findUserById = async (id) => {
       id: id
     }, 
     include: {
-      projects: true
+      projects: {
+        include: {
+          project: true
+        }
+      }
     }
   })
 } 

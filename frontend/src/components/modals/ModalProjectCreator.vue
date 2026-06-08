@@ -57,15 +57,20 @@ const callCreateProject = async () => {
 
     console.log(res)
 
-    if (res?.status !== 201) {
+    if (!res || !res.success) {
         error.value.all = "Erro no servidor.";
         return
     }
-    
+
     const createdProject = res.data?.project
 
-    user.projects.push(createdProject)
+    if (!createdProject) {
+        error.value.all = "Resposta inesperada do servidor.";
+        return
+    }
 
+    user.projects.push(createdProject)
+    console.log(user.projects)
     props.closeModal()
 };
 </script>

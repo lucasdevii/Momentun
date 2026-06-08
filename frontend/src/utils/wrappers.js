@@ -5,12 +5,14 @@ export const asyncReqWrapper = (fn) => {
 
             return {
                 success: true,
-                data: res.data
+                data: res.data,
+                status: res.status
             }
         }catch(error){
             return {
                 success: false,
-                error
+                error,
+                status: error.response?.status || 500
             }
         }
     }

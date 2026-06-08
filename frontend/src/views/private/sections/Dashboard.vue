@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { user } from '../../../utils/contexts/user.context';
 import ModalProjectCreator from '../../../components/modals/ModalProjectCreator.vue'
 
-const projects = ref([]);
+const projects = ref(user.projects);
 const creatorIsOpen = ref(false);
 
 const openModal = () => {
@@ -43,11 +43,11 @@ const closeModal = () => {
                     hover:shadow-lg transition-all duration-200 hover:scale-[1.02] "
                 >
                     <h2 class="text-xl font-semibold truncate">
-                        {{ project.name }}
+                        {{ project.project.name }}
                     </h2>
 
                     <p class="text-sm mt-2 opacity-75 line-clamp-4">
-                        {{ project.description }}
+                        {{ project.project.description }}
                     </p>
                 </div>
             </div>
@@ -66,11 +66,11 @@ const closeModal = () => {
                     hover:shadow-lg transition-all duration-200 hover:scale-[1.02] "
                 >
                     <h2 class="text-xl font-semibold truncate">
-                        {{ project.name }}
+                        {{ project.project.name }}
                     </h2>
 
                     <p class="text-sm mt-2 opacity-75 line-clamp-4">
-                        {{ project.description }}
+                        {{ project.project.description }}
                     </p>
                 </div>
             </div>

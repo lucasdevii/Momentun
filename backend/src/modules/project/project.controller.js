@@ -53,8 +53,13 @@ export const newProject = asyncHandler(async (req, res) => {
         description
     });
 
+    const projectFormatted = {
+        ...project.adminRelation,
+        project: project.project
+    }
+
     return res.status(201).json({
         message: 'Projeto criado com sucesso.',
-        project
+        project: projectFormatted
     });
 });

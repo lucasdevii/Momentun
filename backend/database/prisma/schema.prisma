@@ -103,6 +103,8 @@ model users_projects {
 
   project        projects      @relation(fields: [project_id], references: [id])
   user           users         @relation(fields: [user_id], references: [id])
+
+  @@unique([user_id, project_id])
 }
 
 model cards {

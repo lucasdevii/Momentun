@@ -9,10 +9,12 @@ export const userInfos = asyncHandler(async (req, res) => {
         res.clearCookie("token")
         return res.status(401).json({message: "Usuário não encontrado.",})
     }
+    console.log(user)
     const safeUser = {
         username: user.username,
         display_name: user.display_name,
-        email: user.email
+        email: user.email,
+        projects: user.projects,
     }
     return res.status(200).json(safeUser)
 })

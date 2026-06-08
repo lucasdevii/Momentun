@@ -51,6 +51,9 @@ export const findUserById = async (id) => {
   return await prisma.users.findUnique({
     where: {
       id: id
+    }, 
+    include: {
+      projects: true
     }
   })
 } 

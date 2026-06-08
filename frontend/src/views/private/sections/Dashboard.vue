@@ -16,7 +16,7 @@ const closeModal = () => {
 </script>
 <template>
     <div class="w-full h-screen relative">    
-        <ModalProjectCreator v-if="creatorIsOpen"/>
+        <ModalProjectCreator v-if="creatorIsOpen" :closeModal="closeModal"/>
         <div class="w-full">
             <h1 class=" px-4 py-3 text-2xl font-semibold mb-4">
                 Projetos privados

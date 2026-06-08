@@ -24,31 +24,27 @@
     </div>
 </template>
 <script setup>
-import { ref, reactive } from "vue";
+import { ref } from "vue";
 import { createProject } from "../../services/project.services.js";
 import { user } from "../../utils/contexts/user.context.js"
 
 const props = defineProps({
-    isOpenModal: {
-        type: Boolean
+    closeModal: {
+        type: Function
     }
 })
-
-const emit = defineEmits(["update:isOpenModal"])
 
 const name = ref("New Project");
 const description = ref("");
 
-const error = reactive({
+const error = ref({
     name: null,
     all: null
 });
 
 const callCreateProject = async () => {
-    error.name = null;
-
     if (!name.value.trim()) {
-        error.name = "Preencha o campo Nome.";
+        error.value.name = "Preencha o campo Nome.";
         return;
     }
 
@@ -59,15 +55,17 @@ const callCreateProject = async () => {
 
     const res = await createProject(projectInfos);
 
+    console.log(res)
+
     if (res?.status !== 201) {
-        error.all = "Erro no servidor.";
+        error.value.all = "Erro no servidor.";
         return
     }
     
-    const createdProject = res.data.project
+    const createdProject = res.data?.project
 
-    user.value.projects.push(createdProject)
+    user.projects.push(createdProject)
 
-    emit("isOpenModal", false)
+    props.closeModal()
 };
 </script>

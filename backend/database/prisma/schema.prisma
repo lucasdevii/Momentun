@@ -96,7 +96,7 @@ model users_projects {
   project_id     Int          
   user_id        Int
   role           role_states   @default(member)
-  exp            Int
+  exp            Int           @default(0)
   
   updated_at     DateTime      @updatedAt
   created_at     DateTime      @default(now())

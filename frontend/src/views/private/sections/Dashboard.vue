@@ -1,7 +1,10 @@
 <script setup>
+import { useRouter } from 'vue-router';
 import { ref } from 'vue'
 import { user } from '../../../utils/contexts/user.context';
 import ModalProjectCreator from '../../../components/modals/ModalProjectCreator.vue'
+
+const router = useRouter();
 
 const projects = ref(user.projects);
 const creatorIsOpen = ref(false);
@@ -12,6 +15,11 @@ const openModal = () => {
 const closeModal = () => {
     creatorIsOpen.value = false;
 };
+
+const changeForProjectScreen = (projectId) => {
+    console.log(projects.value);
+    router.push(`/project/${projectId}`);
+}
 
 </script>
 <template>
@@ -41,6 +49,7 @@ const closeModal = () => {
                     class="shrink-0 w-72 h-52 rounded-xl border border-(--destac-color)
                     bg-(--bg-current) p-4 hover:bg-(--minucious-secondary-color) cursor-pointer
                     hover:shadow-lg transition-all duration-200 hover:scale-[1.02] "
+                    @click="changeForProjectScreen(project.project.id)"
                 >
                     <h2 class="text-xl font-semibold truncate">
                         {{ project.project.name }}

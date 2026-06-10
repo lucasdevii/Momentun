@@ -19,3 +19,23 @@ export const createProject = async ({userId, name, description = null}) => {
         return {project, adminRelation};
     })
 }
+export const getProjectById = async (projectId) => {
+    return await prisma.projects.findUnique({
+        where: {
+            id: projectId
+        },
+        include: {
+            members: {
+                include: {
+                    user: {
+                        select: {
+                            id: true,
+                            username: true,
+                            email: true,
+                        }
+                    }
+                }
+            }
+        }
+    })
+}

@@ -1,5 +1,5 @@
 import { asyncHandler } from '../../utils/wrappers.js';
-import { createProject } from './project.service.js';
+import { createProject, getProjectById } from './project.service.js';
 
 export const newProject = asyncHandler(async (req, res) => {
     const userId = req.user.id;
@@ -61,5 +61,35 @@ export const newProject = asyncHandler(async (req, res) => {
     return res.status(201).json({
         message: 'Projeto criado com sucesso.',
         project: projectFormatted
+    });
+});
+
+export const getProject = asyncHandler(async (req, res) => {
+    const id = Number(req.params?.id);
+
+    if(!id){
+        return res.status(400).json({
+            error: 'ID é obrigatório.'
+        });
+    }
+
+    const project = await getProjectById(id);
+
+    if(!project){
+        return res.status(404).json({
+            error: 'Projeto não encontrado.'
+        });
+    }
+
+    console.log(project);
+
+    if(!project.members.some(member => member.user_id === req.user.id)){
+        return res.status(401).json({
+            error: 'Usuário não tem acesso a esse projeto.'
+        });
+    }
+
+    return res.status(200).json({
+        project
     });
 });

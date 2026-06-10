@@ -4,18 +4,29 @@
     </div>
 </template>
 <script setup>
+import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { watch } from 'vue';
-import { getProjectById } from '../../services/project.services';
+import { getProject } from '../../services/project.services';
 
 const route = useRoute();
-const project = ref(null)
+const project = ref(null);
 
 const loadProject = async () => {
-    project.value = await getProjectById(Number(route.params.id))
-}
+    try {
+        project.value = await getProject(Number(route.params?.id));
+        console.log('Projeto:', project.value);
+    } catch (error) {
+        console.error('Erro ao carregar o projeto:', error);
+    }
+};
 
-watch(route.params.id, async () => {
-    await loadProject();
-})
+watch(
+    () => route.params.id,
+    async (newId) => {
+        if (newId) {
+            await loadProject();
+        }
+    },
+    { immediate: true }
+);
 </script>

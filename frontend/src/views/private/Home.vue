@@ -1,5 +1,5 @@
 <script setup>
-import SideBar from '../../components/SideBar.vue';
+import DashboardSideBar from '../../components/DashboardSideBar.vue';
 import Dashboard from './sections/Dashboard.vue';
 import Settings from './sections/Settings.vue';
 
@@ -8,7 +8,7 @@ import { switchSideBarValue, currentSection, Sections } from '../../utils/contex
 </script>
 <template>
     <div class="flex">
-        <SideBar/>
+        <DashboardSideBar/>
         <Dashboard v-if="currentSection === Sections.DASHBOARD" class="overflow-hidden"/>
         <Settings v-if="currentSection === Sections.SETTINGS" class="overflow-hidden"/>
     </div>

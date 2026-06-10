@@ -2,9 +2,10 @@
 import { isExpanded, switchSideBarValue, setCurrentSection, Sections } from '../utils/contexts/sideBar.context.js'
 import { user } from '../utils/contexts/user.context.js';
 
+
 </script>
 <template>
-    <div 
+    <nav 
         :class="isExpanded ? 'w-min' : 'w-48'" 
         class="border-r border-(--destac-color) h-screen p-3 flex flex-col justify-between relative z-50"     
     >
@@ -42,5 +43,5 @@ import { user } from '../utils/contexts/user.context.js';
                 </div>
             </div>
         </div>
-    </div>
+    </nav>
 </template>

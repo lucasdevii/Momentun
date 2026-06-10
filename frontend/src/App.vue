@@ -1,7 +1,6 @@
 <script setup>
 import { useRoute } from 'vue-router';
 import { onMounted, watch } from 'vue';
-import SideBar from './components/SideBar.vue';
 import { themeMode } from './utils/contexts/themeMode.context.js';
 
 const route = useRoute();

@@ -1,12 +1,17 @@
 <template>
-    <div class="w-full h-screen">
-        
+    <div class="flex">
+        <ProjectSideBar/>
+        <div class="w-full h-screen">
+            <ProjectBoard/>
+        </div>
     </div>
 </template>
 <script setup>
 import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { getProject } from '../../services/project.services';
+import ProjectBoard from './sections/ProjectBoard.vue';
+import ProjectSideBar from '../../components/ProjectSideBar.vue';
 
 const route = useRoute();
 const project = ref(null);

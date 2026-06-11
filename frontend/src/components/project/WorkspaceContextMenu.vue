@@ -1,87 +1,61 @@
 <template>
-    <section
-        @contextmenu.prevent="openMenu"
-        @click="closeMenu"
-        class="w-full h-full relative"
+    <div
+        v-if="menuVisible"
+        class="fixed w-44 h-60 bg-(--bg-main) rounded-lg shadow-lg p-2 z-50 flex flex-col space-y-1"
+        :style="{
+            left: `${menuX}px`,
+            top: `${menuY}px`
+        }"
     >
-
-        <div
-            v-if="menuVisible"
-            class="fixed w-44 h-60 bg-(--bg-main) rounded-lg shadow-lg p-2 z-50 flex flex-col space-y-1"
-            :style="{
-                left: `${menuX}px`,
-                top: `${menuY}px`
-            }"
-        >
-            <button
-                @click="createCard"
-                class="sections"
-            >
-                ➕ Nova tarefa
-            </button>
-
-            <button
-                @click="createText"
-                class="sections"
-            >
-                📋 Novo card
-            </button>
-
-            <button
-                @click="createDocument"
-                class="sections"
-            >
-                📄 Nova lista
-            </button>
-
-            <button
-                @click="openProjectSettings"
-                class="sections"
-            >
-                ⚙️ Configurações
-            </button>
-        </div>
-    </section>
+        <button @click="emitCreateCard" class="sections">➕ Nova tarefa</button>
+        <button @click="emitCreateText" class="sections">📋 Novo card</button>
+        <button @click="emitCreateDocument" class="sections">📄 Nova lista</button>
+        <button @click="emitOpenProjectSettings" class="sections">⚙️ Configurações</button>
+    </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+const props = defineProps({
+    menuVisible: {
+        type: Boolean,
+        default: false,
+    },
+    menuX: {
+        type: Number,
+        default: 0,
+    },
+    menuY: {
+        type: Number,
+        default: 0,
+    },
+});
 
-const emit = defineEmits(["create-card", "create-text"])
+const emit = defineEmits([
+    "create-card",
+    "create-text",
+    "create-document",
+    "open-project-settings",
+    "close-menu",
+]);
 
-const menuVisible = ref(false);
-const menuX = ref(0);
-const menuY = ref(0);
-
-const openMenu = (event) => {
-    menuX.value = event.clientX;
-    menuY.value = event.clientY;
-    menuVisible.value = true;
-};
-
-const closeMenu = () => {
-    menuVisible.value = false;
-};
-
-const createCard = () => {
+const emitCreateCard = () => {
     emit("create-card");
-    closeMenu();
+    emit("close-menu");
 };
 
-const createText = () => {
+const emitCreateText = () => {
     emit("create-text");
-    closeMenu();
+    emit("close-menu");
 };
 
-
-const createDocument = () => {
-    console.log("Criar documento");
-    closeMenu();
+const emitCreateDocument = () => {
+    emit("create-document");
+    emit("close-menu");
 };
 
-const openProjectSettings = () => {
-    console.log("Abrir configurações");
-    closeMenu();
+const emitOpenProjectSettings = () => {
+    emit("open-project-settings");
+    emit("close-menu");
 };
 </script>
 
